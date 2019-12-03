@@ -1,0 +1,6 @@
+
+- name: Unarchive binary
+  shell: gunzip -c {{ promtail_archive }} >  {{ promtail_binary }}
+  args:
+    chdir: /usr/local/bin
+    creates: "{{ promtail_binary }}"

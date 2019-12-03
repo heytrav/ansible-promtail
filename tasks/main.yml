@@ -1,0 +1,26 @@
+---
+- name: Fetch content of checksum file
+  uri:
+    url: "{{ promtail_checksum_file }}"
+    return_content: true
+  register: checksum_content
+
+
+- name: Download promtail binary
+  get_url:
+    dest: "/usr/local/bin/{{ promtail_archive }}"
+    url: "{{ promtail_binary_url }}"
+    owner: root
+    group: root
+    checksum: "sha256:{{ checksum_sha }}"
+
+- include_tasks: "{{ ansible_facts.distribution }}.yml"
+
+- name: Make binary executable
+  file:
+    path: "/usr/local/bin/{{ promtail_binary }}"
+    state: file
+    owner: root
+    group: root
+    mode: 0755
+    

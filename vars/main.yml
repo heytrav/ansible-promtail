@@ -1,0 +1,6 @@
+---
+promtail_binary: promtail-linux-amd64
+promtail_binary_url: "https://github.com/grafana/loki/releases/download/{{ promtail_version }}/{{ promtail_binary }}.gz"
+promtail_checksum_file: "https://github.com/grafana/loki/releases/download/{{ promtail_version }}/SHA256SUMS"
+promtail_archive: "{{ promtail_binary_url | basename }}"
+checksum_sha: "{{ checksum_content.content | regex_findall('(?ms)^([^\\s]+)\\s+' + promtail_binary + '.*$') | first }}"
